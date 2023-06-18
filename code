@@ -1,0 +1,26 @@
+
+```{r}
+library(tidyverse)
+library(rvest)
+
+page_num <- 1:60
+url <-"https://psa.gov.ph/classification/psgc/?q=psgc/municipalities&page="
+
+page <- paste(url, page_num, sep="")
+
+myfunc <- function(url){
+                    url %>% read_html() %>% 
+                        html_nodes("#classifytable") %>% 
+                        html_table()
+                }
+
+
+temp2 <- lapply(page, myfunc) 
+
+temp3 <- bind_rows(temp2)
+#temp <- municipalities %>% unlist() %>% as_tibble()
+
+#References:
+#https://stackoverflow.com/questions/36683510/r-web-scraping-across-multiple-pages
+
+```
